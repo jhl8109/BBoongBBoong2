@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/BBoongBBoong2/Toilet/app/src/main/res/drawable/custom_rating_false.xml" value="0.175" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/BBoongBBoong2/Toilet/app/src/main/res/drawable/custom_rating_true.xml" value="0.175" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/BBoongBBoong2/Toilet/app/src/main/res/drawable/customrating.xml" value="0.175" />
         <entry key="..\:/Users/jhl81/OneDrive/project_2-2/BBoongBBoong2/Toilet/app/src/main/res/drawable/marker_border.xml" value="0.16302083333333334" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/BBoongBBoong2/Toilet/app/src/main/res/drawable/round.xml" value="0.175" />
         <entry key="..\:/Users/jhl81/OneDrive/project_2-2/BBoongBBoong2/Toilet/app/src/main/res/layout/balloon_layout.xml" value="0.67" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/BBoongBBoong2/Toilet/app/src/main/res/layout/bottom_dialog.xml" value="0.146875" />
         <entry key="..\:/Users/jhl81/OneDrive/project_2-2/BBoongBBoong2/Toilet/app/src/main/res/layout/custom_callout_balloon.xml" value="0.5" />
         <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/drawable/clicked_border.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/drawable/dialog_border.xml" value="0.21458333333333332" />

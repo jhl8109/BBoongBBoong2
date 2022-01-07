@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:text="등록하시려는 목록을 선택해주세요."
         android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textSize="15sp"
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +26,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_trash"
+        android:src="@drawable/trash"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +40,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="12dp"
-        android:src="@drawable/ic_toilet"
+        android:src="@drawable/toilet"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="104dp"
         android:text="화장실"
-        android:textSize="15dp"
+        android:textSize="13dp"
         android:textStyle="bold"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="104dp"
         android:text="쓰레기통"
-        android:textSize="15dp"
+        android:textSize="13dp"
         android:textStyle="bold"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,41 +73,54 @@
 
     <RatingBar
         android:id="@+id/ratingBar"
+        style="@style/starRatingBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
         android:isIndicator="false"
         android:numStars="5"
         android:rating="2.5"
         android:stepSize="10"
-        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:weightSum="6"
         android:orientation="horizontal"
-        android:weightSum="5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
+            android:id="@+id/edits"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:hint="특징에 대해 설명해주세요"
-            android:padding="20dp"
+            android:gravity="right"
+            android:hint="특징에 대해 설명해주세요."
+            android:layout_weight="5"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="12dp"
             android:textSize="15dp"
+            android:background="@drawable/round"
+            android:backgroundTint="#F2FAE8"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <Button
             android:id="@+id/btn_register"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/black"
-            android:text="등록" />
+            android:background="@drawable/round"
+            android:backgroundTint="#FF9800"
+            android:text="등록"
+            android:textSize="13dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

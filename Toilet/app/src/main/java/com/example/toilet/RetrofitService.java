@@ -1,5 +1,8 @@
 package com.example.toilet;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -12,10 +15,8 @@ import retrofit2.http.POST;
 public interface RetrofitService {
     @GET("toilet")
     Call<Result> getToilet();
-    @FormUrlEncoded
     @POST("toilet/add")
-    Call<Result> addToilet(
-            @Field("lat") Double lat,@Field("lnd") Double lnd,@Field("review") Review review
-    );
-
+    Call<Result> addToilet(@Body Result result);
+    @POST("toilet/add")
+    Call<Result> addTrash(@Body Result result);
 }
