@@ -23,6 +23,7 @@ public class CustomDialog extends Dialog {
     ImageView iv_trash;
     Button btn_register;
     RatingBar ratingBar;
+
     int selected;
 
     public CustomDialog(@NonNull Context context) {
@@ -85,5 +86,6 @@ public class CustomDialog extends Dialog {
                 dismiss();
             }
         });
+
     }
 }
