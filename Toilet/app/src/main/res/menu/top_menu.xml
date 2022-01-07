@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item android:id="@+id/action_play"
+        android:title="재생|일시정지"
+        android:icon="@drawable/ic_play"
+        app:showAsAction="always"/>
+    <item android:id="@+id/action_waterfall"
+        android:title="에티켓 물소리"
+        android:icon="@drawable/ic_play"
+        app:showAsAction="withText"/>
+    <item android:id="@+id/action_bird"
+        android:title="에티켓 새소리"
+        android:icon="@drawable/ic_pause"
+        app:showAsAction="withText"/>
+
+</menu>

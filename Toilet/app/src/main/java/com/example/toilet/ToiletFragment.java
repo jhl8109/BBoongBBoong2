@@ -1,8 +1,9 @@
 package com.example.toilet;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Bundle;
-
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -10,22 +11,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.gun0912.tedpermission.PermissionListener;
-
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
-import net.daum.mf.map.api.MapView.MapViewEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ToiletFragment extends Fragment {
+    static final int PERMISSIONS_REQUEST_READ_LOCATION = 0x00000001;
 
     ArrayList<DataMarker> dataMarkers = new ArrayList<DataMarker>();
     MapPoint centerPoint;
     MapPOIItem currentLocationMarker = new MapPOIItem();
     MapView mapView;
+    int tag;
 
     public ToiletFragment() {
         // Required empty public constructor
@@ -37,7 +43,9 @@ public class ToiletFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -47,7 +55,6 @@ public class ToiletFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_toilet, container, false);
         mapView = new MapView(requireContext());
         ViewGroup mapViewContainer = v.findViewById(R.id.map_view);
-        mapViewContainer.addView(mapView);
         mapView.zoomIn(true);
         mapView.setCurrentLocationEventListener(new MapView.CurrentLocationEventListener() {
             @Override
@@ -56,7 +63,7 @@ public class ToiletFragment extends Fragment {
                     // 현재 위치 업데이트
                     Toast.makeText(requireContext(), "이동 감지", Toast.LENGTH_LONG).show();
                     centerPoint = mapPoint;
-                    currentLocationMarker.moveWithAnimation(mapPoint, false);
+                    currentLocationMarker.moveWithAnimation(mapPoint, true);
                     currentLocationMarker.setAlpha(1F);
                     if (mapView != null) {
                         mapView.setMapCenterPoint(
@@ -71,7 +78,7 @@ public class ToiletFragment extends Fragment {
 
             @Override
             public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
-                //Toast.makeText(requireContext(), "단말의 각도 값 요청", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -84,8 +91,32 @@ public class ToiletFragment extends Fragment {
                 Toast.makeText(requireContext(), "위치 요청이 취소되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
+        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+
+                PERMISSIONS_REQUEST_READ_LOCATION);
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
+        mapViewContainer.addView(mapView);
+
         makeMarker();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("localhost:3000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<List<Result>> res = retrofitService.getToilet();
+        res.enqueue(new Callback<List<Result>>() {
+            @Override
+            public void onResponse(Call<List<Result>> call, Response<List<Result>> response) {
+                if (response.isSuccessful()) {
+                    Log.e("test",response.body().toString());
+                }
+
+            }
+            @Override
+            public void onFailure(Call<List<Result>> call, Throwable t) {
+
+            }
+        });
         return v;
     }
     public void makeMarker() {
@@ -99,8 +130,14 @@ public class ToiletFragment extends Fragment {
             marker.setMapPoint(mapPoint);
             marker.setMarkerType(dataMarkers.get(i).getMarkerType());
             mapView.addPOIItem(marker);
-
         }
 
     }
+    public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
+        String place_name = mapPOIItem.getItemName();
+        tag = mapPOIItem.getTag();
+        Toast.makeText(requireContext(), "클릭 감지", Toast.LENGTH_LONG).show();
+
+    }
 }
+

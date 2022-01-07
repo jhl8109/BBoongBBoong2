@@ -1,38 +1,27 @@
 package com.example.toilet;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
-import android.app.Dialog;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,19 +30,23 @@ public class MainActivity extends AppCompatActivity {
     Fragment fragment_trash;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
+    MediaPlayer mediaPlayer;
+    int playCheck = R.id.action_waterfall;
+    Boolean play = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //권한 설정
+
+
         FloatingActionButton fab = findViewById(R.id.fab);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        fragment_toilet = new ToiletFragment();
-        fragment_trash = new TrashFragment();
-        fragmentManager = getSupportFragmentManager();
-        transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_layout, fragment_toilet).commitAllowingStateLoss();
+        getSupportActionBar().setTitle("뿡뿡이");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF339999));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,26 +55,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //권한 여부 확인
-        PermissionListener permissionlistener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                Toast.makeText(MainActivity.this, "권한 허가", Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                Toast.makeText(MainActivity.this, "권한 거부\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        };
-        //권한 설정
-        TedPermission.with(this)
-                .setPermissionListener(permissionlistener)
-                .setRationaleMessage("구글 로그인을 하기 위해서는 위치 접근 권한이 필요해요")
-                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있어요.")
-                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
-                .check();
 
+        fragment_toilet = new ToiletFragment();
+        fragment_trash = new TrashFragment();
+        fragmentManager = getSupportFragmentManager();
+        transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.main_layout, fragment_toilet).commitAllowingStateLoss();
         bottomNavigationView.getMenu().getItem(1).setEnabled(false);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             // do stuff
@@ -89,19 +69,100 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.toilet:
                     transaction.replace(R.id.main_layout, fragment_toilet).commitAllowingStateLoss();
-                    Log.e("111","111");
                     break;
                 case R.id.trash:
                     transaction.replace(R.id.main_layout, fragment_trash).commitAllowingStateLoss();
-                    Log.e("222","222");
                     break;
                 default:
                     break;
             }
             return true;
         });
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Toast.makeText(getApplicationContext(), "권한이 허용됨", Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                Toast.makeText(getApplicationContext(), "권한이 거부됨", Toast.LENGTH_SHORT).show();
+            }
+        };
 
+        TedPermission.with(this)
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage("구글 로그인을 하기 위해서는 위치 접근 권한이 필요해요")
+                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있어요.")
+                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                .check();
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_waterfall:
+                Toast.makeText(this, "물소리", Toast.LENGTH_SHORT).show();
+                if (playCheck == R.id.action_bird && play) {
+                    mediaPlayer.pause();
+                    playCheck = R.id.action_waterfall;
+                    mediaPlayer = MediaPlayer.create(this,R.raw.waterfall);
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                    getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_pause));
+                } else if (playCheck == R.id.action_bird && !play) {
+                    playCheck = R.id.action_waterfall;
+                } else {} //(playCheck == R.id.action_waterfall)
+                break;
+
+            case R.id.action_bird:
+                Toast.makeText(this, "새소리", Toast.LENGTH_SHORT).show();
+                if (playCheck == R.id.action_waterfall && play) {
+                    playCheck = R.id.action_bird;
+                    mediaPlayer.pause();
+                    mediaPlayer = MediaPlayer.create(this,R.raw.bird);
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                    getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_pause));
+                } else if (playCheck == R.id.action_waterfall && !play) {
+                    playCheck = R.id.action_bird;
+                } else {} //(playCheck == R.id.action_bird)
+                break;
+
+            case R.id.action_play:
+                Toast.makeText(this, "재생", Toast.LENGTH_SHORT).show();
+                if (playCheck == R.id.action_waterfall && !play) {
+                    item.setIcon(getResources().getDrawable(R.drawable.ic_pause));
+                    play = true;
+                    mediaPlayer = MediaPlayer.create(this,R.raw.waterfall);
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                } else if(playCheck == R.id.action_bird && !play){
+                    play = true;
+                    mediaPlayer = MediaPlayer.create(this,R.raw.bird);
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                    item.setIcon(getResources().getDrawable(R.drawable.ic_pause));
+                }
+                else if(playCheck == R.id.action_waterfall && play){
+                    play = false;
+                    mediaPlayer.pause();
+                    item.setIcon(getResources().getDrawable(R.drawable.ic_play));
+                }else if(playCheck == R.id.action_bird && play){
+                    play = false;
+                    mediaPlayer.pause();
+                    item.setIcon(getResources().getDrawable(R.drawable.ic_play));
+                }
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
