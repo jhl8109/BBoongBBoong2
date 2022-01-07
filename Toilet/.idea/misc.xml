@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/drawable/clicked_border.xml" value="0.21458333333333332" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/drawable/dialog_border.xml" value="0.21458333333333332" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/drawable/unclicked_border.xml" value="0.21458333333333332" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/layout/activity_main.xml" value="0.1875" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/layout/bottom_dialog.xml" value="0.25" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/layout/dialog.xml" value="0.1984375" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/layout/fragment_bottom_dialog.xml" value="0.1984375" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/layout/fragment_toilet.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/menu/bottom_menu.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/jhl81/OneDrive/project_2-2/Toilet/app/src/main/res/xml/network_security_config.xml" value="0.20208333333333334" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
