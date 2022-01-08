@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:layout_gravity="center_vertical"
     android:background="@drawable/marker_border"
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_margin="10dp"
         android:orientation="horizontal" >
 
@@ -30,7 +32,7 @@
 
             <TextView
                 android:layout_weight="1"
-                android:id="@+id/title"
+                android:id="@+id/rating_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -41,16 +43,17 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/desc"
+            <RatingBar
+                android:id="@+id/rating_desc"
+                style="@style/smallRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="custom marker desc."
-                android:textColor="#000000"
-                android:textSize="14sp" />
+                android:isIndicator="false"
+                android:numStars="5"
+                android:progressTint="#FFC905"
+                android:rating="3.5"
+                android:stepSize="0.5" />
+
 
         </LinearLayout>
     </LinearLayout>

@@ -1,13 +1,11 @@
 package com.example.toilet;
 
 import android.Manifest;
-import android.app.Dialog;
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Rating;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,19 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,7 +40,8 @@ public class ToiletFragment extends Fragment {
     MapPOIItem currentLocationMarker = new MapPOIItem();
     MapView mapView;
     ViewGroup ct;
-
+    String tempAddr;
+    String score;
 
     public ToiletFragment() {
         // Required empty public constructor
@@ -54,8 +53,9 @@ public class ToiletFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+            super.onCreate(savedInstanceState);
         //new MarkerEventListener();
+
     }
 
     @Override
@@ -105,17 +105,15 @@ public class ToiletFragment extends Fragment {
             }
         });
         ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-
                 PERMISSIONS_REQUEST_READ_LOCATION);
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
         mapViewContainer.addView(mapView);
-        makeMarker();
+        connectingServer();
         return v;
     }
-    public void makeMarker() {
-        dataMarkers.add(new DataMarker("test",centerPoint,MapPOIItem.MarkerType.BluePin));
-        //Log.e("centerPoint",centerPoint.toString());
-        MapPoint mapPoint =  MapPoint.mapPointWithGeoCoord(37.5514579595, 126.951949155);
+    public void makeMarker(String id,Double latitude,Double longitude) {
+        dataMarkers.add(new DataMarker(id,centerPoint,MapPOIItem.MarkerType.BluePin)); //임시방편 코드
+        MapPoint mapPoint =  MapPoint.mapPointWithGeoCoord(latitude, longitude);
         MapPOIItem marker = new MapPOIItem();
         for(int i = 0; i<dataMarkers.size(); i++) {
             marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
@@ -127,8 +125,8 @@ public class ToiletFragment extends Fragment {
             marker.setMapPoint(mapPoint);
             mapView.addPOIItem(marker);
         }
-
     }
+
 class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
     private final View mCalloutBalloon;
 
@@ -138,8 +136,24 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
 
     @Override
     public View getCalloutBalloon(MapPOIItem poiItem){
-        ((TextView) mCalloutBalloon.findViewById(R.id.title)).setText("경상남도 양산시 물금읍 신주로 40");
-        ((TextView) mCalloutBalloon.findViewById(R.id.desc)).setText("score");
+        String x = String.valueOf(poiItem.getMapPoint().getMapPointGeoCoord().latitude);
+        String y = String.valueOf(poiItem.getMapPoint().getMapPointGeoCoord().longitude);
+        changeAddress(x,y);
+        String addr = tempAddr;
+        String id = poiItem.getItemName();
+        getAverageScore(id);
+        ((TextView) mCalloutBalloon.findViewById(R.id.rating_title)).setText(tempAddr);
+        if (score != null) {
+            float temp = Float.parseFloat(score);
+            Log.e("float", String.valueOf(temp));
+            ((RatingBar) mCalloutBalloon.findViewById(R.id.rating_desc)).setRating(temp);
+        }
+        else {
+            RatingBar ratingBar = mCalloutBalloon.findViewById(R.id.rating_desc);
+            ratingBar.setRating(0.0F);
+            ((RatingBar) mCalloutBalloon.findViewById(R.id.rating_desc)).setRating(0.0F);
+        }
+
         return mCalloutBalloon;
     }
 
@@ -185,6 +199,102 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
         Window window = dialog.getWindow();
         window.setAttributes(lp);
         window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+    }
+    public void connectingServer() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.249.18.109:443/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<ArrayList<Result>> res = retrofitService.getToilet();
+        res.enqueue(new Callback<ArrayList<Result>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Result>> call, Response<ArrayList<Result>> response) {
+                ArrayList<Result> result = response.body();
+                if (response.isSuccessful()) {
+                    Log.e("test", String.valueOf(result.get(0).getId()));
+                }
+                else {
+                    try {
+                        Log.e("err",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                for(int i = 0; i<result.size(); i++) {
+                    makeMarker(result.get(i).getId(),result.get(i).getLat(),result.get(i).getLng());
+                    Log.e("id", String.valueOf(result.get(i).getLat())+ " "+String.valueOf(result.get(i).getLng()));
+                }
+            }
+            @Override
+            public void onFailure(Call<ArrayList<Result>> call, Throwable t) {
+                Log.e("failed","failed");
+                t.printStackTrace();
+            }
+        });
+    }
+    public void changeAddress(String x, String y) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://dapi.kakao.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<AddrResult> res = retrofitService.getAddress("KakaoAK 16b9d5d1f68577d49a3ddcdae9f7c5ca",y,x);
+        res.enqueue(new Callback<AddrResult>() {
+
+            @Override
+            public void onResponse(Call<AddrResult> call, Response<AddrResult> response) {
+                AddrResult result = response.body();
+                if (response.isSuccessful()) {
+                    tempAddr = result.getDocuments().get(0).getAddress_name();
+                    Log.e("kakao test", tempAddr);
+                }
+                else {
+                    Log.e("else called","test");
+                    try {
+                        Log.e("err",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<AddrResult> call, Throwable t) {
+                Log.e("failed","failed");
+                t.printStackTrace();
+            }
+        });
+    }
+    public void getAverageScore(String id) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.249.18.109:443/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<String> res = retrofitService.getScore(id);
+        res.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String result = response.body();
+                if (response.isSuccessful()) {
+                    Log.e("test", result.toString());
+                    score = result;
+                }
+                else {
+                    try {
+                        Log.e("err",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("failed","failed");
+                t.printStackTrace();
+            }
+        });
     }
 }
 
