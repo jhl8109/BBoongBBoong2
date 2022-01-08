@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/background"
-        android:drawable="@drawable/custom_rating_false" />
+    <item android:id="@android:id/background"
+        android:drawable="@drawable/empty" />
     // 여기에는 아까 만들어 둔 false 리소스
 
-    <item android:id="@+id/secondaryProgress"
-        android:drawable="@drawable/custom_rating_false" />
+    <item android:id="@android:id/secondaryProgress"
+        android:drawable="@drawable/empty" />
     // 여기에도
 
-    <item android:id="@+id/progress"
-        android:drawable="@drawable/custom_rating_true" />
+    <item android:id="@android:id/progress"
+        android:drawable="@drawable/full" />
     // 여기는 true 리소스 넣어줍니다.
 </layer-list>
