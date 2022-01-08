@@ -1,15 +1,20 @@
 package com.example.toilet;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -124,26 +129,6 @@ public class ToiletFragment extends Fragment {
         }
 
     }
-//    class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
-//        private final View mCalloutBalloon;
-//
-//        public CustomCalloutBalloonAdapter(){
-//            mCalloutBalloon = getLayoutInflater().inflate(R.layout.balloon_layout, null);
-//        }
-//
-//        @Override
-//        public View getCalloutBalloon(MapPOIItem poiItem){
-//            ((TextView) mCalloutBalloon.findViewById(R.id.ball_address)).setText("주소");
-//            ((TextView) mCalloutBalloon.findViewById(R.id.ball_score)).setText("점수");
-//            ((TextView) mCalloutBalloon.findViewById(R.id.ball_review)).setText("리뷰");
-//            return mCalloutBalloon;
-//        }
-//
-//        @Override
-//        public View getPressedCalloutBalloon(MapPOIItem poiItem){
-//            return null;
-//        }
-//    }
 class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
     private final View mCalloutBalloon;
 
@@ -172,8 +157,8 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
 
         @Override
         public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
-            Toast.makeText(requireContext(), "Clicked" + mapPOIItem.getItemName() + " Callout Balloon", Toast.LENGTH_SHORT).show();
-            Log.e("2222222222222222","진입");
+            //balloon touch event
+            showDialog();
         }
 
         @Override
@@ -188,6 +173,19 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
             Log.i("444444444444444","진입");
         }
     };
+    private void showDialog() {
+        ReviewDialog dialog =  new ReviewDialog(requireContext());
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setAttributes(lp);
+        window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+    }
 }
 
 

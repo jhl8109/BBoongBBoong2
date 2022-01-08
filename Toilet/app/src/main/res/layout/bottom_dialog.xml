@@ -5,7 +5,8 @@
     android:layout_height="260dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="bottom"
-    android:background="@drawable/dialog_border">
+    android:background="@drawable/dialog_border"
+    android:backgroundTint="#FFFFFF"    >
 
     <TextView
         android:id="@+id/textView19"
@@ -71,18 +72,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_trash" />
 
+
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/ratingbar"
         style="@style/starRatingBar"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="16dp"
         android:isIndicator="false"
         android:numStars="5"
-        android:rating="2.5"
-        android:stepSize="10"
+        android:progressTint="#FFC905"
+        android:rating="3.5"
+        android:stepSize="0.5"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
@@ -100,7 +104,7 @@
             android:id="@+id/edits"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="left"
             android:hint="특징에 대해 설명해주세요."
             android:layout_weight="5"
             android:layout_marginLeft="10dp"
@@ -111,14 +115,14 @@
             android:backgroundTint="#F2FAE8"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_register"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/round"
-            android:backgroundTint="#FF9800"
+            android:backgroundTint="#8BC34A"
             android:text="등록"
             android:textSize="13dp"/>
     </LinearLayout>

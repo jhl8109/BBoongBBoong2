@@ -56,9 +56,7 @@ public class CustomDialog extends Dialog {
         iv_toilet = findViewById(R.id.iv_toilet);
         iv_trash = findViewById(R.id.iv_trash);
         btn_register = findViewById(R.id.btn_register);
-        ratingBar = findViewById(R.id.ratingBar);
-        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+        ratingBar = findViewById(R.id.ratingbar);
         iv_toilet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,10 +100,9 @@ public class CustomDialog extends Dialog {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ratingBar = findViewById(R.id.ratingBar);
+                ratingBar = findViewById(R.id.ratingbar);
                 float score = ratingBar.getRating();
                 edits = findViewById(R.id.edits);
-
                 String comments = edits.getText().toString();
                 if (selected== R.id.iv_toilet) {
                     double currentLatitude= gpsTracker.getLatitude();
