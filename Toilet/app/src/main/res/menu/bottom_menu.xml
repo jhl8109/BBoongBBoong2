@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/toilet"
-        android:icon="@drawable/ic_toilet"
+        android:icon="@drawable/toilet"
         android:title="화장실"
         android:enabled="true"/>
     <item
@@ -10,7 +10,7 @@
         android:title=""/>
     <item
         android:id="@+id/trash"
-        android:icon="@drawable/ic_trash"
+        android:icon="@drawable/trashicon"
         android:title="쓰레기통"
         android:enabled="true"/>
 </menu>
