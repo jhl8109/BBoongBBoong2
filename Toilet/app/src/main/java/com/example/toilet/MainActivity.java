@@ -169,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
     private void showBottomDialog() {
            CustomDialog dialog =  new CustomDialog(this);
            dialog.getWindow().setGravity(Gravity.BOTTOM);
-
            dialog.setCancelable(true);
            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
            lp.copyFrom(dialog.getWindow().getAttributes());
