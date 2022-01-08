@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class Result {
+    private String _id;
     private double lat;
     private double lng;
 
@@ -34,4 +35,11 @@ public class Result {
         this.lng = lng;
     }
 
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        this._id = id;
+    }
 }
