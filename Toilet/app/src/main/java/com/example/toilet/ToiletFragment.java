@@ -1,6 +1,7 @@
 package com.example.toilet;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Rating;
 import android.os.Build;
@@ -43,7 +44,6 @@ public class ToiletFragment extends Fragment {
     ViewGroup ct;
     String tempAddr;
     String score;
-
     public ToiletFragment() {
         // Required empty public constructor
     }
@@ -198,7 +198,9 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialog.show();
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
         Window window = dialog.getWindow();
         window.setAttributes(lp);
         window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
