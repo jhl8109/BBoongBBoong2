@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

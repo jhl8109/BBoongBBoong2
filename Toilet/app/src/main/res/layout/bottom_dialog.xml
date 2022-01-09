@@ -5,8 +5,7 @@
     android:layout_height="260dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="bottom"
-    android:background="@drawable/dialog_border"
-    android:backgroundTint="#FFFEFC"    >
+    android:background="#FFFEFC"    >
 
     <TextView
         android:id="@+id/textView19"
@@ -14,9 +13,10 @@
         android:layout_height="wrap_content"
         android:text="등록하시려는 종류를 선택해주세요."
         android:textColor="#6C4000"
-        android:textSize="15sp"
-        android:fontFamily="@font/notosansl"
-        android:layout_margin="10dp"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosansr"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,7 +55,7 @@
         android:text="화장실"
         android:textSize="14dp"
         android:textColor="#422700"
-        android:fontFamily="@font/nanumsquare"
+        android:fontFamily="@font/nanumsquareb"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_toilet" />
 
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="100dp"
-        android:fontFamily="@font/nanumsquare"
+        android:fontFamily="@font/nanumsquareb"
         android:text="쓰레기통"
         android:textColor="#422700"
         android:textSize="14dp"
@@ -77,7 +77,7 @@
         style="@style/starRatingBar"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:isIndicator="false"
         android:numStars="5"
         android:progressTint="#FFC905"
