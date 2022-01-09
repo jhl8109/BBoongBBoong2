@@ -3,20 +3,22 @@ package com.example.toilet;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Result {
-    private double lat;
-    private double lng;
-
-    public ArrayList<Review> getReview() {
+    public List<Review> getReview() {
         return review;
     }
 
-    public void setReview(ArrayList<Review> review) {
+    public void setReview(List<Review> review) {
         this.review = review;
     }
 
-    private ArrayList<Review> review;
+    private String _id;
+    private double lat;
+    private double lng;
+    private List<Review> review;
+
 
     public double getLat() {
         return lat;
@@ -34,4 +36,11 @@ public class Result {
         this.lng = lng;
     }
 
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        this._id = id;
+    }
 }

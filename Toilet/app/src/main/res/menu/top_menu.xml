@@ -15,9 +15,5 @@
         android:title="에티켓 새소리"
         android:icon="@drawable/ic_pause"
         app:showAsAction="withText"/>
-    <item android:id="@+id/action_classic"
-        android:title="에티켓 클래식"
-        android:icon="@drawable/ic_pause"
-        app:showAsAction="withText"/>
 
 </menu>

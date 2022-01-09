@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //권한 설정
+        getSupportActionBar().setTitle("뿡뿡이");
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF339999));
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        getSupportActionBar().setTitle("뿡뿡이");
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF339999));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,9 +68,13 @@ public class MainActivity extends AppCompatActivity {
             transaction = fragmentManager.beginTransaction();
             switch (item.getItemId()) {
                 case R.id.toilet:
+                    transaction.detach(fragment_trash).commitNow();
+                    transaction.attach(fragment_toilet).commitNow();
                     transaction.replace(R.id.main_layout, fragment_toilet).commitAllowingStateLoss();
                     break;
                 case R.id.trash:
+                    transaction.detach(fragment_toilet).commitNow();
+                    transaction.attach(fragment_trash).commitNow();
                     transaction.replace(R.id.main_layout, fragment_trash).commitAllowingStateLoss();
                     break;
                 default:
@@ -96,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있어요.")
                 .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
                 .check();
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
