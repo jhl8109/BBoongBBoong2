@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -21,6 +22,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+
+import net.daum.mf.map.api.MapCircle;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,11 +45,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Toast.makeText(getApplicationContext(), "권한이 허용됨", Toast.LENGTH_SHORT).show();
+            }
 
-        //권한 설정
-        getSupportActionBar().setTitle("뿡뿡이");
-        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF339999));
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                Toast.makeText(getApplicationContext(), "권한이 거부됨", Toast.LENGTH_SHORT).show();
+            }
+        };
 
+        TedPermission.with(this)
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage("구글 로그인을 하기 위해서는 위치 접근 권한이 필요해요")
+                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있어요.")
+                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                .check();
+
+        getSupportActionBar().setIcon(R.drawable.icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -54,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
                 showBottomDialog();
             }
         });
-        //권한 여부 확인
-
 
         fragment_toilet = new ToiletFragment();
         fragment_trash = new TrashFragment();
@@ -82,25 +103,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-
-        /*PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                Toast.makeText(getApplicationContext(), "권한이 허용됨", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(getApplicationContext(), "권한이 거부됨", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage("구글 로그인을 하기 위해서는 위치 접근 권한이 필요해요")
-                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있어요.")
-                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
-                .check();*/
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,6 +112,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
+        if(id == R.id.action_tracking) {
+            MapView mMapView = ToiletFragment.mapView;
+            GpsTracker gpsTracker = new GpsTracker(getApplicationContext());
+            MapCircle circle1 = new MapCircle(
+            MapPoint.mapPointWithGeoCoord(gpsTracker.getLatitude(), gpsTracker.longitude), // center
+                    500, // radius
+                    Color.argb(128, 255, 255, 255), // strokeColor
+                    Color.argb(128, 205, 220, 57) // fillColor
+            );
+            circle1.setTag(1234);
+            mMapView.addCircle(circle1);
+        }
         switch (id) {
             case R.id.action_waterfall:
                 Toast.makeText(this, "물소리", Toast.LENGTH_SHORT).show();
@@ -171,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showBottomDialog() {
-           CustomDialog dialog =  new CustomDialog(this);
+           CustomDialog dialog =  new CustomDialog(this, fragment_toilet.requireActivity());
            dialog.getWindow().setGravity(Gravity.BOTTOM);
            dialog.setCancelable(true);
            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

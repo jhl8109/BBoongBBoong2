@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Result {
+
+    private String _id;
+    private double lat;
+    private double lng;
+    private List<Review> review;
+
     public List<Review> getReview() {
         return review;
     }
@@ -13,12 +19,6 @@ public class Result {
     public void setReview(List<Review> review) {
         this.review = review;
     }
-
-    private String _id;
-    private double lat;
-    private double lng;
-    private List<Review> review;
-
 
     public double getLat() {
         return lat;
