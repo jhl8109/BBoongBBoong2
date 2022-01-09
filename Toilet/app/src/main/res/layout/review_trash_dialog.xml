@@ -8,15 +8,15 @@
     android:layout_gravity="bottom">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/recycler_view_trash"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:layout_constraintBottom_toTopOf="@+id/rb_addReview"
+        app:layout_constraintBottom_toTopOf="@+id/rb_addReview_trash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <RatingBar
-        android:id="@+id/rb_addReview"
+        android:id="@+id/rb_addReview_trash"
         style="@style/starRatingBar"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -25,12 +25,12 @@
         android:numStars="5"
         android:rating="3.5"
         android:stepSize="0.5"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2_trash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout2_trash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -40,14 +40,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
-            android:id="@+id/et_review"
+            android:id="@+id/et_review_trash"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:hint="리뷰를 등록하세요" />
 
         <Button
-            android:id="@+id/btn_review"
+            android:id="@+id/btn_review_trash"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

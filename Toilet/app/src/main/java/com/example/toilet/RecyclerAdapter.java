@@ -1,6 +1,7 @@
 package com.example.toilet;
 
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -47,19 +49,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
         holder.tv_review.setText(reviews.get(position).getComment());
         holder.rb_review.setRating((float) reviews.get(position).getScore());
         int ratingScore = (int) reviews.get(position).getScore();
+        Log.e("ratingScore", String.valueOf(ratingScore));
         switch (ratingScore) {
             case 1:
-                //holder.iv_review.setBackground();
+                holder.iv_review.setImageResource(R.drawable.face1);
                 break;
             case 2:
+                holder.iv_review.setImageResource(R.drawable.face2);
                 break;
             case 3:
+                holder.iv_review.setImageResource(R.drawable.face3);
                 break;
             case 4:
+                holder.iv_review.setImageResource(R.drawable.face4);
                 break;
             case 5:
+                holder.iv_review.setImageResource(R.drawable.face5);
                 break;
             default:
+                holder.iv_review.setImageResource(R.drawable.face1);
                 break;
         }
     }

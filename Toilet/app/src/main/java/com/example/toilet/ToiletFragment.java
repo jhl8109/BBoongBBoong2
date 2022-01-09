@@ -3,6 +3,7 @@ package com.example.toilet;
 import android.Manifest;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Rating;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -146,6 +147,8 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
         if (score != null) {
             float temp = Float.parseFloat(score);
             Log.e("float", String.valueOf(temp));
+            RatingBar ratingBar = mCalloutBalloon.findViewById(R.id.rating_desc);
+            ratingBar.setRating(temp);
             ((RatingBar) mCalloutBalloon.findViewById(R.id.rating_desc)).setRating(temp);
         }
         else {
@@ -153,7 +156,7 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
             ratingBar.setRating(0.0F);
             ((RatingBar) mCalloutBalloon.findViewById(R.id.rating_desc)).setRating(0.0F);
         }
-
+        //refreshFragment();
         return mCalloutBalloon;
     }
 
@@ -172,7 +175,7 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
         @Override
         public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
             //balloon touch event
-            showDialog();
+            showDialog(mapPOIItem.getItemName());
         }
 
         @Override
@@ -187,8 +190,8 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
             Log.i("444444444444444","진입");
         }
     };
-    private void showDialog() {
-        ReviewDialog dialog =  new ReviewDialog(requireContext());
+    private void showDialog(String id) {
+        ReviewDialog dialog =  new ReviewDialog(requireContext(),id);
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.setCancelable(true);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -295,6 +298,14 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
                 t.printStackTrace();
             }
         });
+    }
+    public void refreshFragment(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            requireFragmentManager().beginTransaction().detach(this).commitNow();
+            requireFragmentManager().beginTransaction().attach(this).commitNow();
+        } else {
+            requireFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
     }
 }
 

@@ -20,10 +20,9 @@ import retrofit2.http.Query;
 public interface RetrofitService {
     @GET("toilet")
     Call<ArrayList<Result>> getToilet();
+
     @POST("toilet/add")
     Call<Result> addToilet(@Body Result result);
-    @POST("toilet/add")
-    Call<Result> addTrash(@Body Result result);
     @FormUrlEncoded
     @PUT("toilet/{id}")
     Call<String> putToilet(
@@ -36,6 +35,10 @@ public interface RetrofitService {
             @Path("id") String id
     );
 
+    @GET("toilet/id/{id}")
+    Call<Result> getReviewData(
+            @Path("id") String id
+    );
 
     @GET("v2/local/geo/coord2regioncode.JSON")
     Call<AddrResult> getAddress(
@@ -44,4 +47,26 @@ public interface RetrofitService {
             @Query("y") String y
     );
 
+
+    @GET("trash")
+    Call<ArrayList<Result>> getTrash();
+
+    @POST("trash/add")
+    Call<Result> addTrash(@Body Result result);
+    @FormUrlEncoded
+    @PUT("trash/{id}")
+    Call<String> putTrash(
+            @Path("id") String id,
+            @Field("score") double score,
+            @Field("comment") String comment
+    );
+    @GET("trash/avg/{id}")
+    Call<String> getTrashScore(
+            @Path("id") String id
+    );
+
+    @GET("trash/id/{id}")
+    Call<Result> getTrashReviewData(
+            @Path("id") String id
+    );
 }
