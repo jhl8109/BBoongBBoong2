@@ -1,5 +1,6 @@
 package com.example.toilet;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,16 +43,19 @@ public class CustomDialog extends Dialog {
     RatingBar ratingBar;
     EditText edits;
     GpsTracker gpsTracker = new GpsTracker(getContext());
-
     int selected;
+    Activity activity;
+    int idRecoded;
 
-    public CustomDialog(@NonNull Context context) {
+    public CustomDialog(@NonNull Context context, Activity activity) {
         super(context);
+        this.activity = activity;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.bottom_dialog);
         iv_toilet = findViewById(R.id.iv_toilet);
@@ -104,9 +109,25 @@ public class CustomDialog extends Dialog {
                 float score = ratingBar.getRating();
                 edits = findViewById(R.id.edits);
                 String comments = edits.getText().toString();
+                ArrayList<Result> resultList = ((AppTest) activity.getApplication()).getToiletList();
+                double currentLatitude= gpsTracker.getLatitude();
+                double currentLongitude = gpsTracker.getLongitude();
+                double curLat =  Math.round(currentLatitude*1000)/1000.0;
+                double curLng =  Math.round(currentLongitude*1000)/1000.0;
+                for (int i = 0; i < resultList.size(); i++) {
+                    double lat = Math.round(resultList.get(i).getLat()*1000)/1000.0;
+                    double lng = Math.round(resultList.get(i).getLng()*1000)/1000.0;
+                    Log.e("속상해", String.valueOf(lat));
+                    if ((lat == curLat) && (lng == curLng)) {
+                        idRecoded = i;
+                        Log.e("idzzzzz",resultList.get(idRecoded).getId());
+                        putServer(resultList.get(idRecoded).getId(),score,comments);
+                        dismiss();
+                        return;
+                    }
+                }
                 if (selected== R.id.iv_toilet) {
-                    double currentLatitude= gpsTracker.getLatitude();
-                    double currentLongitude = gpsTracker.getLongitude();
+
                     ArrayList<Review> list = new ArrayList();
                     Result result = new Result();
                     result.setLat(currentLatitude);
@@ -136,8 +157,6 @@ public class CustomDialog extends Dialog {
                     });
                     dismiss();
                 } else {
-                    double currentLatitude= gpsTracker.getLatitude();
-                    double currentLongitude = gpsTracker.getLongitude();
                     ArrayList<Review> list = new ArrayList();
                     Result result = new Result();
                     result.setLat(currentLatitude);
@@ -169,6 +188,51 @@ public class CustomDialog extends Dialog {
                 }
             }
         });
-
+    }
+    public void putServer(String _id, double score,String comment) {
+        if (selected== R.id.iv_toilet) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://192.249.18.109:443/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+            Call<String> res = retrofitService.putToilet(_id,score,comment);
+            res.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    String result = response.body();
+                    if (response.isSuccessful()) {
+                        Log.e("test",result);
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Log.e("failed","failed");
+                    t.printStackTrace();
+                }
+            });
+        }
+        else {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://192.249.18.109:443/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+            Call<String> res = retrofitService.putTrash(_id,score,comment);
+            res.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    String result = response.body();
+                    if (response.isSuccessful()) {
+                        Log.e("test",result);
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Log.e("failed","failed");
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 }
