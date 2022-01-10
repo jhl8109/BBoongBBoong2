@@ -8,6 +8,16 @@ public class AppTest extends Application {
     private ArrayList<Result> toiletList;
     private ArrayList<Result> trashList;
 
+    public ArrayList<Double> getTrashScores() {
+        return trashScores;
+    }
+
+    public void setTrashScores(ArrayList<Double> trashScores) {
+        this.trashScores = trashScores;
+    }
+
+    private ArrayList<Double> trashScores;
+
     public ArrayList<Result> getToiletList() {
         return toiletList;
     }
