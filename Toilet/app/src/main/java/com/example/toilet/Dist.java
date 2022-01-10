@@ -3,9 +3,18 @@ package com.example.toilet;
 public class Dist implements Comparable<Dist> {
     private double score;
     private String address;
+    private String id;
 
+    public String getId() {
+        return id;
+    }
 
-    public Dist(double v, String good) {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Dist(String id,double v, String good) {
+        this.id = id;
         this.score = v;
         this.address = good;
     }

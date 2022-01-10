@@ -1,10 +1,7 @@
 package com.example.toilet;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
-import android.media.Rating;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -213,7 +210,7 @@ public class ToiletFragment extends Fragment {
         }
     };
     private void showDialog(String id) {
-        ReviewDialog dialog =  new ReviewDialog(requireContext(),id);
+        ReviewDialog dialog =  new ReviewDialog(requireContext(),id,0);
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.setCancelable(true);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -227,6 +224,7 @@ public class ToiletFragment extends Fragment {
         window.setAttributes(lp);
         window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
+
     public void connectingServer() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.249.18.109:443/")
@@ -261,6 +259,7 @@ public class ToiletFragment extends Fragment {
             }
         });
     }
+
     public void changeAddress(String x, String y) {
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -294,6 +293,7 @@ public class ToiletFragment extends Fragment {
             }
         });
     }
+
     public void getAverageScore(String id) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.249.18.109:443/")
@@ -324,6 +324,7 @@ public class ToiletFragment extends Fragment {
             }
         });
     }
+
     public void refreshFragment(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             requireFragmentManager().beginTransaction().detach(this).commitNow();

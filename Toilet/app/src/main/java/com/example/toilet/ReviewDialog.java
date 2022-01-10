@@ -46,10 +46,12 @@ public class ReviewDialog extends Dialog {
     private RatingBar rb_addReview;
     private String _id;
     RecyclerView mRecyclerView;
+    int frag;
 
-    public ReviewDialog(@NonNull Context context, String id) {
+    public ReviewDialog(@NonNull Context context, String id, int frag) {
         super(context);
         _id = id;
+        this.frag = frag;
     }
 
     @Override
@@ -123,7 +125,13 @@ public class ReviewDialog extends Dialog {
                 .build();
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
         Log.e("_id",_id);
-        Call<Result> res = retrofitService.getReviewData(_id);
+        Call<Result> res;
+
+        if (frag == 0) {
+            res = retrofitService.getReviewData(_id);
+        } else {
+            res = retrofitService.getTrashReviewData(_id);
+        }
         res.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -142,7 +150,6 @@ public class ReviewDialog extends Dialog {
                         e.printStackTrace();
                     }
                 }
-
             }
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
