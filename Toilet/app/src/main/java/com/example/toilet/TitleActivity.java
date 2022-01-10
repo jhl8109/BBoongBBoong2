@@ -41,7 +41,7 @@ public class TitleActivity extends AppCompatActivity {
         try {
             TedPermission.with(this)
                 .setPermissionListener(permissionlistener)
-                .setRationaleMessage("구글 로그인을 하기 위해서는 위치 접근 권한이 필요해요")
+                .setRationaleMessage("화장실을 찾기 위해서는 위치 접근 권한이 필요해요")
                 .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있어요.")
                 .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
                 .check();
@@ -63,7 +63,7 @@ public class TitleActivity extends AppCompatActivity {
             Animation anim = AnimationUtils.loadAnimation(TitleActivity.this, R.anim.bbong);
             bbongbbong.startAnimation(anim);
             cloud.startAnimation(animc);
-            hd.postDelayed(new SplashHandler(), 5000);
+            hd.postDelayed(new SplashHandler(), 3000);
         }
 
         @Override

@@ -4,6 +4,7 @@ public class Dist {
     private double score;
     private String address;
 
+
     public Dist(double v, String good) {
         this.score = v;
         this.address = good;

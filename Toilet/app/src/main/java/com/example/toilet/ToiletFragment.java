@@ -144,7 +144,7 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
         String id = poiItem.getItemName();
         getAverageScore(id);
         ((TextView) mCalloutBalloon.findViewById(R.id.rating_title)).setText(tempAddr);
-        if (score != null) {
+        /*if (score != null) {
             float temp = Float.parseFloat(score);
             Log.e("float", String.valueOf(temp));
             RatingBar ratingBar = mCalloutBalloon.findViewById(R.id.rating_desc);
@@ -155,7 +155,7 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
             RatingBar ratingBar = mCalloutBalloon.findViewById(R.id.rating_desc);
             ratingBar.setRating(0.0F);
             ((RatingBar) mCalloutBalloon.findViewById(R.id.rating_desc)).setRating(0.0F);
-        }
+        }*/
         //refreshFragment();
         return mCalloutBalloon;
     }
@@ -200,7 +200,7 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         if (!dialog.isShowing()) {
             dialog.show();
-        }
+        } // 추가 된 줄 ,, 다이얼로그 중복 방지?
         Window window = dialog.getWindow();
         window.setAttributes(lp);
         window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));

@@ -1,11 +1,14 @@
 package com.example.toilet;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -41,7 +44,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //권한 설정
-        getSupportActionBar().setTitle("뿡뿡이");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("뿡뿡이");
+        toolbar.setTitleTextAppearance(this,R.style.TextAppearance_Toolbar);
+        toolbar.setTitleTextColor(Color.parseColor("#FFFEFC"));
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF339999));
 
 
@@ -83,24 +92,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        /*PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                Toast.makeText(getApplicationContext(), "권한이 허용됨", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(getApplicationContext(), "권한이 거부됨", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage("구글 로그인을 하기 위해서는 위치 접근 권한이 필요해요")
-                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있어요.")
-                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
-                .check();*/
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

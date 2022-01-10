@@ -144,7 +144,7 @@ public class TrashFragment extends Fragment {
             String id = poiItem.getItemName();
             getAverageScore(id);
             ((TextView) mCalloutBalloon.findViewById(R.id.rating_title)).setText(tempAddr);
-            if (score != null) {
+            /*if (score != null) {
                 float temp = Float.parseFloat(score);
                 Log.e("float", String.valueOf(temp));
                 ((RatingBar) mCalloutBalloon.findViewById(R.id.rating_desc)).setRating(temp);
@@ -153,7 +153,7 @@ public class TrashFragment extends Fragment {
                 RatingBar ratingBar = mCalloutBalloon.findViewById(R.id.rating_desc);
                 ratingBar.setRating(0.0F);
                 ((RatingBar) mCalloutBalloon.findViewById(R.id.rating_desc)).setRating(0.0F);
-            }
+            }*/
             //refreshFragment();
             return mCalloutBalloon;
         }

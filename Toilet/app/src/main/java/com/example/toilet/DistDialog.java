@@ -20,12 +20,10 @@ public class DistDialog extends Dialog {
 
     private ArrayList<Dist> list;
     private DistAdapter distAdapter;
-    private String _id;
     RecyclerView mRecyclerView;
 
     public DistDialog(@NonNull Context context, String id) {
         super(context);
-        _id = id;
     }
 
     @Override
