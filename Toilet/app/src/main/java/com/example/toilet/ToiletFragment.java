@@ -217,9 +217,7 @@ public class ToiletFragment extends Fragment {
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        if (!dialog.isShowing()) {
-            dialog.show();
-        } // 추가 된 줄 ,, 다이얼로그 중복 방지?
+        dialog.show();
         Window window = dialog.getWindow();
         window.setAttributes(lp);
         window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
