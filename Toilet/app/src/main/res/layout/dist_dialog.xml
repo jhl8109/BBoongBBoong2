@@ -3,8 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="260dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFEFC"
+    android:background="#FDF6EB"
     android:layout_gravity="bottom">
+
+    <TextView
+        android:id="@+id/tv_dist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:fontFamily="@font/nanumsquarer"
+        android:textSize="14dp"
+        android:textColor="#E85715"
+        android:text="근처에서 가장 인기있는 장소에요!" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view2"

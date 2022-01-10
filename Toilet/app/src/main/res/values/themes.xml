@@ -3,12 +3,13 @@
     <style name="Theme.Toilet" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#FFC107</item>
-        <item name="colorPrimaryVariant">#FFAA00</item>
+        <item name="colorPrimaryVariant">#FFC107</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#8CCC43</item>
         <item name="colorSecondaryVariant">#8BC34A</item>
         <item name="colorOnSecondary">@color/black</item>
+        <item name="android:itemBackground">#FFC107</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="windowActionBar">true</item>

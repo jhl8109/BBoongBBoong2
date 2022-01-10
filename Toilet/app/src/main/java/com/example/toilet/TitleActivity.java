@@ -63,7 +63,7 @@ public class TitleActivity extends AppCompatActivity {
             Animation anim = AnimationUtils.loadAnimation(TitleActivity.this, R.anim.bbong);
             bbongbbong.startAnimation(anim);
             cloud.startAnimation(animc);
-            hd.postDelayed(new SplashHandler(), 3000);
+            hd.postDelayed(new SplashHandler(), 2800);
         }
 
         @Override
