@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     int playCheck = R.id.action_waterfall;
     Boolean play = false;
+    Boolean range = false;
 
 
     @Override
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF339999));
-
 
         FloatingActionButton fab = findViewById(R.id.fab);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-        if(id == R.id.action_tracking) {
-            MapView mMapView = ToiletFragment.mapView;
+        MapView mMapView = ToiletFragment.mapView;
+        if(id == R.id.action_tracking && !range) {
             GpsTracker gpsTracker = new GpsTracker(getApplicationContext());
             MapCircle circle1 = new MapCircle(
             MapPoint.mapPointWithGeoCoord(gpsTracker.getLatitude(), gpsTracker.longitude), // center
@@ -117,6 +117,12 @@ public class MainActivity extends AppCompatActivity {
             );
             circle1.setTag(1234);
             mMapView.addCircle(circle1);
+            showDistDialog();
+            range = !range;
+        }
+        else if(id == R.id.action_tracking && range) {
+            mMapView.removeAllCircles();
+            range = !range;
         }
         switch (id) {
             case R.id.action_waterfall:
@@ -176,7 +182,19 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+    private void showDistDialog() {
+        DistDialog dialog =  new DistDialog(this, fragment_toilet.requireActivity());
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setAttributes(lp);
+        window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+    }
 
     private void showBottomDialog() {
            CustomDialog dialog =  new CustomDialog(this, fragment_toilet.requireActivity());
@@ -185,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
            lp.copyFrom(dialog.getWindow().getAttributes());
            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-           lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+           lp.height = 260;
            dialog.show();
            Window window = dialog.getWindow();
            window.setAttributes(lp);

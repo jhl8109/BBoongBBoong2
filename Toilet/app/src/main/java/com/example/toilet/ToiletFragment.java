@@ -40,7 +40,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ToiletFragment extends Fragment {
 
-
     static MapView mapView = null;
     static final int PERMISSIONS_REQUEST_READ_LOCATION = 0x00000001;
 
@@ -54,9 +53,9 @@ public class ToiletFragment extends Fragment {
         ArrayList<DataMarker> dataMarkers = new ArrayList<DataMarker>();
     MapPoint centerPoint;
     MapPOIItem currentLocationMarker = new MapPOIItem();
+    String score;
     ViewGroup ct;
     String tempAddr;
-    String score;
     public ToiletFragment() {
         // Required empty public constructor
     }

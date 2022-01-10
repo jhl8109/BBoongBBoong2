@@ -279,6 +279,7 @@ public class TrashFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.e("test", result.toString());
                     score = result;
+                    ((AppTest)getActivity().getApplication()).getTrashScores().add(Double.parseDouble(score));
                 }
                 else {
                     try {
