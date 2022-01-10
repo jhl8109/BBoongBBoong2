@@ -39,7 +39,7 @@ public class TrashFragment extends Fragment {
     ArrayList<DataMarker> dataMarkers = new ArrayList<DataMarker>();
     MapPoint centerPoint;
     MapPOIItem currentLocationMarker = new MapPOIItem();
-    MapView mapView;
+    static MapView mapView = null;
     ViewGroup ct;
     String tempAddr;
     String score;
@@ -214,6 +214,7 @@ public class TrashFragment extends Fragment {
                 ArrayList<Result> result = response.body();
                 if (response.isSuccessful()) {
                     Log.e("test", String.valueOf(result.get(0).getId()));
+                    ((AppTest) getActivity().getApplication()).setTrashList(result);
                 } else {
                     try {
                         Log.e("err",response.errorBody().string());

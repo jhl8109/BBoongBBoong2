@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,23 +110,43 @@ public class CustomDialog extends Dialog {
                 float score = ratingBar.getRating();
                 edits = findViewById(R.id.edits);
                 String comments = edits.getText().toString();
-                ArrayList<Result> resultList = ((AppTest) activity.getApplication()).getToiletList();
                 double currentLatitude= gpsTracker.getLatitude();
                 double currentLongitude = gpsTracker.getLongitude();
                 double curLat =  Math.round(currentLatitude*1000)/1000.0;
                 double curLng =  Math.round(currentLongitude*1000)/1000.0;
-                for (int i = 0; i < resultList.size(); i++) {
-                    double lat = Math.round(resultList.get(i).getLat()*1000)/1000.0;
-                    double lng = Math.round(resultList.get(i).getLng()*1000)/1000.0;
-                    Log.e("속상해", String.valueOf(lat));
-                    if ((lat == curLat) && (lng == curLng)) {
-                        idRecoded = i;
-                        Log.e("idzzzzz",resultList.get(idRecoded).getId());
-                        putServer(resultList.get(idRecoded).getId(),score,comments);
-                        dismiss();
-                        return;
+                if (selected== R.id.iv_toilet) {
+                    ArrayList<Result> resultList = ((AppTest) activity.getApplication()).getToiletList();
+                    for (int i = 0; i < resultList.size(); i++) {
+                        double lat = Math.round(resultList.get(i).getLat()*1000)/1000.0;
+                        double lng = Math.round(resultList.get(i).getLng()*1000)/1000.0;
+                        Log.e("속상해", String.valueOf(lat));
+                        if ((lat == curLat) && (lng == curLng)) {
+                            idRecoded = i;
+                            Log.e("idzzzzz",resultList.get(idRecoded).getId());
+                            putServer(resultList.get(idRecoded).getId(),score,comments);
+                            dismiss();
+                            return;
+                        }
+                    }
+                } else {
+                    ArrayList<Result> resultList = ((AppTest) activity.getApplication()).getTrashList();
+                    for (int i = 0; i < resultList.size(); i++) {
+                        double lat = Math.round(resultList.get(i).getLat()*1000)/1000.0;
+                        double lng = Math.round(resultList.get(i).getLng()*1000)/1000.0;
+                        Log.e("속상해", String.valueOf(lat));
+                        if ((lat == curLat) && (lng == curLng)) {
+                            idRecoded = i;
+                            Log.e("idzzzzz",resultList.get(idRecoded).getId());
+                            putServer(resultList.get(idRecoded).getId(),score,comments);
+                            dismiss();
+                            return;
+                        }
                     }
                 }
+
+
+
+
                 if (selected== R.id.iv_toilet) {
 
                     ArrayList<Review> list = new ArrayList();
@@ -213,6 +234,7 @@ public class CustomDialog extends Dialog {
             });
         }
         else {
+            Log.e("thisid?", _id);
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("http://192.249.18.109:443/")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -224,7 +246,14 @@ public class CustomDialog extends Dialog {
                 public void onResponse(Call<String> call, Response<String> response) {
                     String result = response.body();
                     if (response.isSuccessful()) {
-                        Log.e("test",result);
+                        Log.e("testxzxxzxx",result);
+                    }
+                    else {
+                        try {
+                            Log.e("why?",response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 @Override
