@@ -24,37 +24,19 @@
             android:src="@drawable/toilet" >
         </ImageView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="2">
-
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/rating_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="Custom Marker"
-                android:textColor="#ff000000"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <RatingBar
-                android:id="@+id/rating_desc"
-                style="@style/smallRatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:isIndicator="false"
-                android:numStars="5"
-                android:progressTint="#FFC905"
-                android:rating="3.5"
-                android:stepSize="0.5" />
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/rating_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Custom Marker"
+            android:textColor="#65625F"
+            android:textSize="14sp"
+            android:fontFamily="@font/notosansm" />
 
 
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

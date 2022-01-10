@@ -13,6 +13,9 @@
     <style name="Widget.BottomNavigationView"
         parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/nanumgothicl</item>
-    </style>
+    </style>>
 
+    <style name="TextAppearance_Toolbar" parent="@style/TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/jalnan</item>
+    </style>
 </resources>

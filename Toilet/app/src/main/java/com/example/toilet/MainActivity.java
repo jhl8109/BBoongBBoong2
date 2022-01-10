@@ -1,6 +1,8 @@
 package com.example.toilet;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -46,28 +48,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                Toast.makeText(getApplicationContext(), "권한이 허용됨", Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(getApplicationContext(), "권한이 거부됨", Toast.LENGTH_SHORT).show();
-            }
-        };
+        //권한 설정
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("뿡뿡이");
+        toolbar.setTitleTextAppearance(this,R.style.TextAppearance_Toolbar);
+        toolbar.setTitleTextColor(Color.parseColor("#FFFEFC"));
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
 
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage("구글 로그인을 하기 위해서는 위치 접근 권한이 필요해요")
-                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있어요.")
-                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
-                .check();
-
-        getSupportActionBar().setTitle("뿡뿡이");
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF339999));
 
         FloatingActionButton fab = findViewById(R.id.fab);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -78,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                 showBottomDialog();
             }
         });
+        //권한 여부 확인
+
 
         fragment_toilet = new ToiletFragment();
         fragment_trash = new TrashFragment();
@@ -104,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
