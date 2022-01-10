@@ -49,6 +49,10 @@ public interface RetrofitService {
             @Query("y") String y
     );
 
+    @GET("toilet/score")
+    Call<List<ScoreResult>> getAllScores();
+
+
 
     @GET("trash")
     Call<ArrayList<Result>> getTrash();

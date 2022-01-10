@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/recycler_item_border"
@@ -14,16 +15,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <RatingBar
+        android:id="@+id/rb_review2"
+        style="@style/smallRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:isIndicator="true"
+        app:layout_constraintStart_toEndOf="@+id/iv_review2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_review2" />
+
     <TextView
         android:id="@+id/tv_review2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/nanumgothic"
+        android:layout_marginTop="8dp"
         android:text="가나다라마바사아자차카타파하가나다"
+        android:fontFamily="@font/nanumgothic"
         android:textSize="13dp"
         app:layout_constraintStart_toEndOf="@+id/iv_review2"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 package com.example.toilet;
 
-public class Dist {
+public class Dist implements Comparable<Dist> {
     private double score;
     private String address;
 
@@ -23,5 +23,12 @@ public class Dist {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public int compareTo(Dist dist) {
+        if (this.score > dist.score) return -1;
+        else if (this.score == dist.score) return 0;
+        else return 1;
     }
 }
