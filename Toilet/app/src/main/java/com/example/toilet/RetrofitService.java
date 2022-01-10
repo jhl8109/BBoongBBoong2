@@ -23,6 +23,7 @@ public interface RetrofitService {
 
     @POST("toilet/add")
     Call<Result> addToilet(@Body Result result);
+
     @FormUrlEncoded
     @PUT("toilet/{id}")
     Call<String> putToilet(
@@ -30,6 +31,7 @@ public interface RetrofitService {
             @Field("score") double score,
             @Field("comment") String comment
     );
+
     @GET("toilet/avg/{id}")
     Call<String> getScore(
             @Path("id") String id

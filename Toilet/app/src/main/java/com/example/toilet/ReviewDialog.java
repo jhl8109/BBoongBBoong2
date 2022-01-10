@@ -84,13 +84,12 @@ public class ReviewDialog extends Dialog {
                 recyclerAdapter = new RecyclerAdapter(list);
                 mRecyclerView.setAdapter(recyclerAdapter);
                 recyclerAdapter.notifyDataSetChanged();
-                String id = "61d86f141e6dc55b9d38e642";
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("http://192.249.18.109:443/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-                Call<String> res = retrofitService.putToilet(id,review.getScore(),review.getComment());
+                Call<String> res = retrofitService.putToilet(_id,review.getScore(),review.getComment());
                 res.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -111,8 +110,13 @@ public class ReviewDialog extends Dialog {
         });
 
     }
-    public void connectingReview(String _id){
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public void connectingReview(String _id){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.249.18.109:443/")
                 .addConverterFactory(GsonConverterFactory.create())

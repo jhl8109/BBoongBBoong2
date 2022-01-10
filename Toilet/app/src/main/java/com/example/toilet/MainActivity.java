@@ -24,6 +24,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+
+import net.daum.mf.map.api.MapCircle;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -101,6 +106,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
+        if(id == R.id.action_tracking) {
+            MapView mMapView = ToiletFragment.mapView;
+            GpsTracker gpsTracker = new GpsTracker(getApplicationContext());
+            MapCircle circle1 = new MapCircle(
+            MapPoint.mapPointWithGeoCoord(gpsTracker.getLatitude(), gpsTracker.longitude), // center
+                    500, // radius
+                    Color.argb(128, 255, 255, 255), // strokeColor
+                    Color.argb(128, 205, 220, 57) // fillColor
+            );
+            circle1.setTag(1234);
+            mMapView.addCircle(circle1);
+        }
         switch (id) {
             case R.id.action_waterfall:
                 Toast.makeText(this, "물소리", Toast.LENGTH_SHORT).show();
@@ -162,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showBottomDialog() {
-           CustomDialog dialog =  new CustomDialog(this);
+           CustomDialog dialog =  new CustomDialog(this, fragment_toilet.requireActivity());
            dialog.getWindow().setGravity(Gravity.BOTTOM);
            dialog.setCancelable(true);
            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

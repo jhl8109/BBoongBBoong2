@@ -3,14 +3,18 @@ package com.example.toilet;
 import android.Manifest;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.media.Rating;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -35,12 +39,21 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ToiletFragment extends Fragment {
+
+
+    static MapView mapView = null;
     static final int PERMISSIONS_REQUEST_READ_LOCATION = 0x00000001;
 
-    ArrayList<DataMarker> dataMarkers = new ArrayList<DataMarker>();
+    public MapView getMapView() {
+        return mapView;
+    }
+
+    public void setMapView(MapView mapView) {
+        this.mapView = mapView;
+    }
+        ArrayList<DataMarker> dataMarkers = new ArrayList<DataMarker>();
     MapPoint centerPoint;
     MapPOIItem currentLocationMarker = new MapPOIItem();
-    MapView mapView;
     ViewGroup ct;
     String tempAddr;
     String score;
@@ -112,9 +125,19 @@ public class ToiletFragment extends Fragment {
         connectingServer();
         return v;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_tracking) {
+            Toast.makeText(requireContext(), "Tracking", Toast.LENGTH_LONG).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void makeMarker(String id,Double latitude,Double longitude) {
-        dataMarkers.add(new DataMarker(id,centerPoint,MapPOIItem.MarkerType.BluePin)); //임시방편 코드
         MapPoint mapPoint =  MapPoint.mapPointWithGeoCoord(latitude, longitude);
+        dataMarkers.add(new DataMarker(id,mapPoint,MapPOIItem.MarkerType.BluePin)); //임시방편 코드
         MapPOIItem marker = new MapPOIItem();
         for(int i = 0; i<dataMarkers.size(); i++) {
             marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
@@ -127,16 +150,15 @@ public class ToiletFragment extends Fragment {
             mapView.addPOIItem(marker);
         }
     }
-
-class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
-    private final View mCalloutBalloon;
+    class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
+        private final View mCalloutBalloon;
 
     public CustomCalloutBalloonAdapter(){
-        mCalloutBalloon = getLayoutInflater().inflate(R.layout.custom_callout_balloon, null);
-    }
+            mCalloutBalloon = getLayoutInflater().inflate(R.layout.custom_callout_balloon, null);
+        }
 
-    @Override
-    public View getCalloutBalloon(MapPOIItem poiItem){
+        @Override
+        public View getCalloutBalloon(MapPOIItem poiItem){
         String x = String.valueOf(poiItem.getMapPoint().getMapPointGeoCoord().latitude);
         String y = String.valueOf(poiItem.getMapPoint().getMapPointGeoCoord().longitude);
         changeAddress(x,y);
@@ -175,6 +197,7 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
         @Override
         public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
             //balloon touch event
+            Log.e("what?","what?");
             showDialog(mapPOIItem.getItemName());
         }
 
@@ -218,6 +241,7 @@ class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter{
                 ArrayList<Result> result = response.body();
                 if (response.isSuccessful()) {
                     Log.e("test", String.valueOf(result.get(0).getId()));
+                    ((AppTest) getActivity().getApplication()).setToiletList(result);
                 }
                 else {
                     try {
