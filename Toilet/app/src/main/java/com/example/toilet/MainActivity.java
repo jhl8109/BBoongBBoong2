@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitleTextAppearance(this,R.style.TextAppearance_Toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#FFFEFC"));
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF339999));
 
         FloatingActionButton fab = findViewById(R.id.fab);

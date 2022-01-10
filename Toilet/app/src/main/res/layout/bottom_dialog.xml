@@ -5,7 +5,7 @@
     android:layout_height="260dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="bottom"
-    android:background="#FFFEFC"    >
+    android:background="#FAF7F2"    >
 
     <TextView
         android:id="@+id/textView19"
@@ -52,10 +52,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="104dp"
+        android:layout_marginTop="5dp"
         android:text="화장실"
         android:textSize="14dp"
-        android:textColor="#422700"
-        android:fontFamily="@font/nanumsquareb"
+        android:textColor="#6C4000"
+        android:fontFamily="@font/nanumroundb"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_toilet" />
 
@@ -64,9 +65,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="100dp"
-        android:fontFamily="@font/nanumsquareb"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/nanumroundb"
         android:text="쓰레기통"
-        android:textColor="#422700"
+        android:textColor="#6C4000"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_trash" />
@@ -122,10 +124,10 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/btn_ripple"
-            android:textColor="#6C4000"
+            android:textColor="#80581D"
             android:text="등록"
             android:textSize="13dp"
-            android:fontFamily="@font/notosansr"/>
+            android:fontFamily="@font/nanumsquareb"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
