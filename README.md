@@ -34,11 +34,11 @@ Tab 2: 쓰레기통 <br>
 ## Implementation
 
 ### 지도
-카카오 맵 API사용
+카카오 맵 API사용 <br>
 카카오 좌표-주소 변환 API사용
 
 ### DB, Server
-MongoDB, express framework 사용
+MongoDB, express framework 사용 <br>
 서버 연결의 경우 Retrofit2 사용
 
 ## 시행착오와 개선방안
