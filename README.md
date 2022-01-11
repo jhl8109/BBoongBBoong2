@@ -1,5 +1,7 @@
 # BBongBBong2
+<img width = "200" height="200" src=https://user-images.githubusercontent.com/77828537/148908103-bed89842-9271-4102-8724-88ff75271993.png > <br>
 MadCamp week2 project
+
 ### 팀원
 이제호, 강현희
 ## Abstract
