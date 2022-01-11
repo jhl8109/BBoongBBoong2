@@ -11,6 +11,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/rb_addReview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -20,7 +21,6 @@
         style="@style/starRatingBar"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginBottom="16dp"
         android:isIndicator="false"
         android:numStars="5"
         android:rating="3.5"
@@ -42,16 +42,29 @@
         <EditText
             android:id="@+id/et_review"
             android:layout_width="0dp"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:hint="리뷰를 등록하세요" />
+            android:layout_marginLeft="10dp"
+            android:padding="12dp"
+            android:textSize="13dp"
+            android:fontFamily="@font/nanumroundbr"
+            android:background="@drawable/round"
+            android:backgroundTint="#F8F0DA"
+            android:hint="리뷰를 등록하세요." />
 
         <Button
             android:id="@+id/btn_review"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/btn_ripple"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="등록" />
+            android:layout_margin="10dp"
+            android:textColor="#80581D"
+            android:text="등록"
+            android:textSize="13dp"
+            android:fontFamily="@font/nanumsquareb" />
     </LinearLayout>
 
 
