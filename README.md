@@ -6,9 +6,9 @@ MadCamp week2 project
 
 카카오 맵 API를 이용해 화장실, 쓰레기통의 위치를 찾아주는 어플리케이션.
 
-Tab 1: 화장실
-Floating action button : 화장실 및 쓰레기통 추가 기능
-Tab 2: 쓰레기통
+Tab 1: 화장실 <br>
+Floating action button : 화장실 및 쓰레기통 추가 기능 <br>
+Tab 2: 쓰레기통 <br>
 
 
 ## Main Features
