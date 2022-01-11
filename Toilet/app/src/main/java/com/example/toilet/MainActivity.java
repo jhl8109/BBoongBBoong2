@@ -1,13 +1,10 @@
 package com.example.toilet;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.Manifest;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
@@ -19,12 +16,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
@@ -75,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         fragment_trash = new TrashFragment();
         fragmentManager = getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
+        fragCheck = R.id.toilet;
         transaction.replace(R.id.main_layout, fragment_toilet).commitAllowingStateLoss();
         bottomNavigationView.getMenu().getItem(1).setEnabled(false);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -99,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             GpsTracker gpsTracker = new GpsTracker(getApplicationContext());
             MapCircle circle1 = new MapCircle(
             MapPoint.mapPointWithGeoCoord(gpsTracker.getLatitude(), gpsTracker.longitude), // center
-                    500, // radius
+                    460, // radius
                     Color.argb(128, 255, 255, 255), // strokeColor
                     Color.argb(128, 205, 220, 57) // fillColor
             );
@@ -125,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(id == R.id.action_tracking && fragCheck == R.id.toilet && toilet_range) {
             MapView mMapView = ToiletFragment.mapView;
+
+            if (mMapView.getPolylines() != null) {
+                mMapView.removeAllPolylines();
+            }
             mMapView.removeAllCircles();
             toilet_range = !toilet_range;
         }
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             GpsTracker gpsTracker = new GpsTracker(getApplicationContext());
             MapCircle circle1 = new MapCircle(
                     MapPoint.mapPointWithGeoCoord(gpsTracker.getLatitude(), gpsTracker.longitude), // center
-                    500, // radius
+                    460, // radius
                     Color.argb(128, 255, 255, 255), // strokeColor
                     Color.argb(128, 205, 220, 57) // fillColor
             );
@@ -142,10 +141,22 @@ public class MainActivity extends AppCompatActivity {
             showDistDialog();
             trash_range = !trash_range;
         }
-        else  { // action_tracking && trash_range && fragCheck == R.id.trash
+        else if(id == R.id.action_tracking && trash_range && fragCheck == R.id.trash) { // action_tracking && trash_range && fragCheck == R.id.trash
+            MapView mMapView = TrashFragment.mapView;
+            if (mMapView.getPolylines() != null) {
+                mMapView.removeAllPolylines();
+            }
+            mMapView.removeAllCircles();
+            trash_range = !trash_range;
+        }
+        else if(id == R.id.action_tracking && trash_range){
             MapView mMapView = TrashFragment.mapView;
             mMapView.removeAllCircles();
             trash_range = !trash_range;
+        } else {
+            MapView mMapView = ToiletFragment.mapView;
+            mMapView.removeAllCircles();
+            toilet_range = !toilet_range;
         }
         switch (id) {
             case R.id.action_waterfall:

@@ -3,6 +3,7 @@ package com.example.toilet;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,11 +17,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapPolyline;
+import net.daum.mf.map.api.MapView;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,7 +66,29 @@ public class DistDialog extends Dialog {
         distAdapter.notifyDataSetChanged();
     }
     public void changeAddress(String x, String y,double scores,String id) {
-
+        if (frag == 0) {
+            GpsTracker gpsTracker = new GpsTracker(getContext());
+            double curLat = gpsTracker.latitude;
+            double curLng = gpsTracker.longitude;
+            MapView mMapView = ToiletFragment.mapView;
+            MapPolyline polyline = new MapPolyline();
+            polyline.addPoint(MapPoint.mapPointWithGeoCoord(Double.parseDouble(x),Double.parseDouble(y)));
+            polyline.addPoint(MapPoint.mapPointWithGeoCoord(curLat,curLng));
+            polyline.setTag(1000);
+            polyline.setLineColor(Color.argb(128, 255, 51, 0)); // Polyline 컬러 지정.
+            mMapView.addPolyline(polyline);
+        } else {
+            GpsTracker gpsTracker = new GpsTracker(getContext());
+            double curLat = gpsTracker.latitude;
+            double curLng = gpsTracker.longitude;
+            MapView mMapView = TrashFragment.mapView;
+            MapPolyline polyline = new MapPolyline();
+            polyline.addPoint(MapPoint.mapPointWithGeoCoord(Double.parseDouble(x),Double.parseDouble(y)));
+            polyline.addPoint(MapPoint.mapPointWithGeoCoord(curLat,curLng));
+            polyline.setTag(1000);
+            polyline.setLineColor(Color.argb(128, 255, 51, 0)); // Polyline 컬러 지정.
+            mMapView.addPolyline(polyline);
+        }
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://dapi.kakao.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -78,6 +106,7 @@ public class DistDialog extends Dialog {
                     Collections.sort(list);
                     mRecyclerView.setAdapter(distAdapter);
                     distAdapter.notifyDataSetChanged();
+
                 }
                 else {
                     Log.e("else called","test");
