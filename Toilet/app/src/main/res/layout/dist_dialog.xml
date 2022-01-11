@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="260dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FDF6EB"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
     android:layout_gravity="bottom">
 
     <TextView
@@ -12,13 +13,14 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:fontFamily="@font/nanumsquarer"
+        android:textStyle="bold"
         android:textSize="14dp"
-        android:textColor="#E85715"
+        android:textColor="#8BC34A"
         android:text="근처에서 가장 인기있는 장소에요!" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view2"
         android:layout_width="match_parent"
-        android:layout_height="260dp" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
