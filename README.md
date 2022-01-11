@@ -47,7 +47,7 @@ Tab 2: 쓰레기통 <br>
 ## Implementation
 
 ### 지도
-카카오 맵 API사용 <br>
+카카오 맵 SDK사용 <br>
 카카오 좌표-주소 변환 API사용
 
 ### DB, Server
