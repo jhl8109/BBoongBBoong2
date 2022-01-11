@@ -50,6 +50,91 @@ Tab 2: 쓰레기통 <br>
 MongoDB, express framework 사용 <br>
 서버 연결의 경우 Retrofit2 사용
 
+```javascript
+const express = require("express");
+const app = express();
+const path = require("path");
+const port = process.env.port || 443
+const mongoose = require('mongoose');
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+mongoose.connect('mongodb+srv://hyunhee:rkdgusgml2@cluster0.u2vfc.mongodb.net/Cluster0?retryWrites=true&w=majority');
+
+var db = mongoose.connection; //데이터 베이스 연결 
+db.on('error',console.error); // 연동 실패시 에러 메세지 출력
+db.once('open', () =>{
+    console.log('connected to mongoDB server'); //연동 성공시 성공 메세지 출력
+}) 
+
+const trashRouter = require('./routes/trash');
+const toiletRouter = require('./routes/toilet');
+
+app.use('/trash',trashRouter);
+app.use('/toilet',toiletRouter); //라우팅 설정
+
+app.get('/', function(req, res){
+    res.send('Please specify what to get.');
+});
+
+app.listen(port, ()=>console.log(`server is running at port ${port}`));
+```
+- Fragment별로 라우터를 설정하여 관리했다.
+
+```javascript
+
+const mongoose = require('mongoose');
+//화장실 스키마
+var PostSchema = new mongoose.Schema({
+    lat: Number,
+    lng: Number,
+    review: [{score:Number, comment: String}]
+  });
+
+  module.exports = mongoose.model("Toilet", PostSchema);
+
+```
+- Toilet Collection 관리를 위한 Schema
+
+```java
+    public void connectingServer() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ip주소")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<ArrayList<Result>> res = retrofitService.getToilet();
+        res.enqueue(new Callback<ArrayList<Result>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Result>> call, Response<ArrayList<Result>> response) {
+                ArrayList<Result> result = response.body();
+                if (response.isSuccessful()) {
+                    Log.e("test", String.valueOf(result.get(0).getId()));
+                    ((AppTest) getActivity().getApplication()).setToiletList(result);
+                }
+                else {
+                    try {
+                        Log.e("err",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                for(int i = 0; i<result.size(); i++) {
+                    makeMarker(result.get(i).getId(),result.get(i).getLat(),result.get(i).getLng());
+                    Log.e("id", String.valueOf(result.get(i).getLat())+ " "+String.valueOf(result.get(i).getLng()));
+                }
+            }
+            @Override
+            public void onFailure(Call<ArrayList<Result>> call, Throwable t) {
+                Log.e("failed","failed");
+                t.printStackTrace();
+            }
+        });
+    }
+
+```
+
 ## 시행착오와 개선방안
 - 카카오 API가이드에 적힌 내용과 일치하지 않는 내용이 많아 어려움이 많았다.
 - 만들어진 SDK에 커스텀하기가 힘들었다.
