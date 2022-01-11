@@ -52,6 +52,9 @@ public interface RetrofitService {
     @GET("toilet/score")
     Call<List<ScoreResult>> getAllScores();
 
+    @GET("trash/score")
+    Call<List<ScoreResult>> getAllTrashScores();
+
 
 
     @GET("trash")
@@ -59,16 +62,13 @@ public interface RetrofitService {
 
     @POST("trash/add")
     Call<Result> addTrash(@Body Result result);
+
     @FormUrlEncoded
     @PUT("trash/{id}")
     Call<String> putTrash(
             @Path("id") String id,
             @Field("score") double score,
             @Field("comment") String comment
-    );
-    @GET("trash/avg/{id}")
-    Call<String> getTrashScore(
-            @Path("id") String id
     );
 
     @GET("trash/id/{id}")

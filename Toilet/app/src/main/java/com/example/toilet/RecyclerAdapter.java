@@ -1,6 +1,5 @@
 package com.example.toilet;
 
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
@@ -23,6 +21,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
         protected ImageView iv_review;
         protected RatingBar rb_review;
 
+
         public CustomViewHolder(View view) {
             super(view);
             this.tv_review = (TextView) view.findViewById(R.id.tv_review);
@@ -30,6 +29,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
             this.rb_review = (RatingBar) view.findViewById(R.id.rb_review);
         }
     }
+
     public RecyclerAdapter(ArrayList<Review> reviews) {
         this.reviews = reviews;
     }

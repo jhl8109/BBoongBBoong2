@@ -1,11 +1,17 @@
 package com.example.toilet;
 
+import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +20,7 @@ import java.util.ArrayList;
 
 public class DistAdapter extends RecyclerView.Adapter<DistAdapter.DistViewHolder>{
     private ArrayList<Dist> dists;
+    private int frag;
 
     public class DistViewHolder extends RecyclerView.ViewHolder {
         protected TextView tv_review2;
@@ -28,8 +35,10 @@ public class DistAdapter extends RecyclerView.Adapter<DistAdapter.DistViewHolder
         }
     }
 
-    public DistAdapter(ArrayList<Dist> dists) { this.dists = dists;}
-
+    public DistAdapter(ArrayList<Dist> dists, int frag) {
+        this.dists = dists;
+        this.frag = frag;
+    }
     @NonNull
     @Override
     public DistAdapter.DistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,6 +74,26 @@ public class DistAdapter extends RecyclerView.Adapter<DistAdapter.DistViewHolder
                 holder.iv_review2.setImageResource(R.drawable.face1);
                 break;
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("gerAdapterPosition", String.valueOf(holder.getAdapterPosition()));
+                ReviewDialog dialog =  new ReviewDialog(view.getContext(), dists.get(holder.getAdapterPosition()).getId(), frag);
+                dialog.getWindow().setGravity(Gravity.BOTTOM);
+                dialog.setCancelable(true);
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(dialog.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                if (!dialog.isShowing()) {
+                    dialog.show();
+                } // 추가 된 줄 ,, 다이얼로그 중복 방지?
+                Window window = dialog.getWindow();
+                window.setAttributes(lp);
+                window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            }
+        });
     }
 
 
