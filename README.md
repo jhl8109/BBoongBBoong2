@@ -13,8 +13,17 @@ Tab 2: 쓰레기통 <br>
 
 ## Main Features
 
-### 1. 위치 찾기 기능
 
+|<img width = "200" height="400" src=https://user-images.githubusercontent.com/78259314/148903546-f644458d-e149-45d3-a66b-b5508c862df7.gif >|<img width = "200" height="400" src=https://user-images.githubusercontent.com/78259314/148902633-421f78fa-4d45-48d6-8157-bb0e26899192.gif>|<img width = "200" height="400" src=https://user-images.githubusercontent.com/78259314/148902539-c5894973-0a08-4821-94e2-4261a046cadf.gif>|
+|:---:|:---:|:---:|
+|위치 찾기|위치 추가|리뷰 추가|
+
+
+|<img width = "200" height="400" src=https://user-images.githubusercontent.com/78259314/148903513-f8a13d86-680e-404a-b67a-bfd2b4ea92ca.gif>|<img  width = "200" height="400" src=https://user-images.githubusercontent.com/78259314/148902602-db18d906-10ce-45fd-80ea-fdaa8e248a36.gif>|
+|:---:|:---:|
+|거리 내 목적지 표시|에티켓 기능|
+
+### 1. 위치 찾기 기능
 - 마커를 사용해서 지도 내에서 화장실/쓰레기통의 위치를 보여준다.
 - 사용자가 바라보는 방향에 따라서 화면이 돌아간다.
 
@@ -27,7 +36,7 @@ Tab 2: 쓰레기통 <br>
 - 평점이 높은 순으로 정렬되어 있으며, 해당 화장실까지의 경로가 line으로 표시되어 있다.
 - 각 아이템 클릭시 해당 화장실/쓰레기통의 리뷰 목록으로 이동한다.
 
-### 3. 에티켓 기능
+### 4. 에티켓 기능
 - 화면 우측 상단의 재생 버튼으로 에티켓 소리를 재생할 수 있다.
 - 점 아이콘을 눌러 소리를 선택할 수 있다.
 
