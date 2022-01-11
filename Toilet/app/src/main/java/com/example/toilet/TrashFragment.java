@@ -1,6 +1,7 @@
 package com.example.toilet;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Rating;
 import android.os.Build;
@@ -43,6 +44,7 @@ public class TrashFragment extends Fragment {
     ViewGroup ct;
     String tempAddr;
     String score;
+    static int dialogCheck = 0;
 
     public TrashFragment() {
         // Required empty public constructor
@@ -173,7 +175,11 @@ public class TrashFragment extends Fragment {
         @Override
         public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
             //balloon touch event
-            showDialog(mapPOIItem.getItemName());
+            if (dialogCheck == 0) {
+                dialogCheck++;
+                Log.e("dialogCheck1", String.valueOf(ToiletFragment.dialogCheck));
+                showDialog(mapPOIItem.getItemName());
+            }
         }
 
         @Override
@@ -192,6 +198,13 @@ public class TrashFragment extends Fragment {
         ReviewTrashDialog dialog =  new ReviewTrashDialog(requireContext(),id);
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.setCancelable(true);
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                TrashFragment.dialogCheck--;
+                Log.e("delete","zzzz");
+            }
+        });
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;

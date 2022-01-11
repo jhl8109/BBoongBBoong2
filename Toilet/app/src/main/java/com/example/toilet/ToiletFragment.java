@@ -1,6 +1,7 @@
 package com.example.toilet;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class ToiletFragment extends Fragment {
 
     static MapView mapView = null;
     static final int PERMISSIONS_REQUEST_READ_LOCATION = 0x00000001;
-
+    static int dialogCheck = 0;
     public MapView getMapView() {
         return mapView;
     }
@@ -126,7 +127,7 @@ public class ToiletFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_tracking) {
-            Toast.makeText(requireContext(), "Tracking", Toast.LENGTH_LONG).show();
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -152,7 +153,6 @@ public class ToiletFragment extends Fragment {
     public CustomCalloutBalloonAdapter(){
             mCalloutBalloon = getLayoutInflater().inflate(R.layout.custom_callout_balloon, null);
         }
-
         @Override
         public View getCalloutBalloon(MapPOIItem poiItem){
         String x = String.valueOf(poiItem.getMapPoint().getMapPointGeoCoord().latitude);
@@ -162,19 +162,6 @@ public class ToiletFragment extends Fragment {
         String id = poiItem.getItemName();
         getAverageScore(id);
         ((TextView) mCalloutBalloon.findViewById(R.id.rating_title)).setText(tempAddr);
-        /*if (score != null) {
-            float temp = Float.parseFloat(score);
-            Log.e("float", String.valueOf(temp));
-            RatingBar ratingBar = mCalloutBalloon.findViewById(R.id.rating_desc);
-            ratingBar.setRating(temp);
-            ((RatingBar) mCalloutBalloon.findViewById(R.id.rating_desc)).setRating(temp);
-        }
-        else {
-            RatingBar ratingBar = mCalloutBalloon.findViewById(R.id.rating_desc);
-            ratingBar.setRating(0.0F);
-            ((RatingBar) mCalloutBalloon.findViewById(R.id.rating_desc)).setRating(0.0F);
-        }*/
-        //refreshFragment();
         return mCalloutBalloon;
     }
 
@@ -187,26 +174,27 @@ public class ToiletFragment extends Fragment {
         @Override
         public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
             //sample code 없음
-            Log.e("111111111111111","진입");
         }
 
         @Override
         public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
             //balloon touch event
-            Log.e("what?","what?");
-            showDialog(mapPOIItem.getItemName());
+            if (dialogCheck == 0) {
+                dialogCheck++;
+                Log.e("dialogCheck1", String.valueOf(ToiletFragment.dialogCheck));
+                showDialog(mapPOIItem.getItemName());
+            }
+
         }
 
         @Override
         public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
             //sample code 없음
-            Log.e("333333333333","진입");
         }
 
         @Override
         public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
             //sample code 없음
-            Log.i("444444444444444","진입");
         }
     };
     private void showDialog(String id) {
@@ -214,6 +202,13 @@ public class ToiletFragment extends Fragment {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.setCancelable(true);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                ToiletFragment.dialogCheck--;
+                Log.e("delete","zzzz");
+            }
+        });
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;

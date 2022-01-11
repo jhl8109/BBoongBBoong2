@@ -160,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
         }
         switch (id) {
             case R.id.action_waterfall:
-                Toast.makeText(this, "물소리", Toast.LENGTH_SHORT).show();
                 if (playCheck == R.id.action_bird && play) {
                     mediaPlayer.pause();
                     playCheck = R.id.action_waterfall;
@@ -174,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_bird:
-                Toast.makeText(this, "새소리", Toast.LENGTH_SHORT).show();
                 if (playCheck == R.id.action_waterfall && play) {
                     playCheck = R.id.action_bird;
                     mediaPlayer.pause();
@@ -188,8 +186,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_play:
-                Toast.makeText(this, "재생", Toast.LENGTH_SHORT).show();
                 if (playCheck == R.id.action_waterfall && !play) {
+                    Toast.makeText(this, "재생", Toast.LENGTH_SHORT).show();
                     item.setIcon(getResources().getDrawable(R.drawable.ic_pause));
                     play = true;
                     mediaPlayer = MediaPlayer.create(this,R.raw.waterfall);
@@ -197,16 +195,19 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer.setLooping(true);
                 } else if(playCheck == R.id.action_bird && !play){
                     play = true;
+                    Toast.makeText(this, "재생", Toast.LENGTH_SHORT).show();
                     mediaPlayer = MediaPlayer.create(this,R.raw.bird);
                     mediaPlayer.start();
                     mediaPlayer.setLooping(true);
                     item.setIcon(getResources().getDrawable(R.drawable.ic_pause));
                 }
                 else if(playCheck == R.id.action_waterfall && play){
+                    Toast.makeText(this, "일시정지", Toast.LENGTH_SHORT).show();
                     play = false;
                     mediaPlayer.pause();
                     item.setIcon(getResources().getDrawable(R.drawable.ic_play));
                 }else if(playCheck == R.id.action_bird && play){
+                    Toast.makeText(this, "일시정지", Toast.LENGTH_SHORT).show();
                     play = false;
                     mediaPlayer.pause();
                     item.setIcon(getResources().getDrawable(R.drawable.ic_play));

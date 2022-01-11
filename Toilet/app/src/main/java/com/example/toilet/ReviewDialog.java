@@ -116,6 +116,7 @@ public class ReviewDialog extends Dialog {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
     }
 
     public void connectingReview(String _id){
@@ -157,5 +158,15 @@ public class ReviewDialog extends Dialog {
                 t.printStackTrace();
             }
         });
+    }
+
+    public void setOnCancelListener(OnDismissListener onDismissListener) {
+        if (frag == 0) {
+            ToiletFragment.dialogCheck--;
+            Log.e("delete","zzzz");
+        } else {
+            TrashFragment.dialogCheck--;
+            Log.e("delete","zzzz");
+        }
     }
 }
