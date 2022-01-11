@@ -134,6 +134,7 @@ var PostSchema = new mongoose.Schema({
     }
 
 ```
+- Client가 Server에서 화장실 정보를 받아오는 코드이다. 
 
 ## 시행착오와 개선방안
 - 카카오 API가이드에 적힌 내용과 일치하지 않는 내용이 많아 어려움이 많았다.
